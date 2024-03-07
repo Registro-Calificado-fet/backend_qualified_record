@@ -46,11 +46,6 @@ public class UniversityService implements IUniversityService {
     public ResponseEntity<ApiResponse<UniversityReadDTO>> createUniversity(UniversityCreateDTO universityCreateDTO) {
         try {
             University university = objectMapper.convertValue(universityCreateDTO, University.class);
-            if (university.getId() == null) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                        .body(new ApiResponse<>("El ID de la universidad no puede ser nulo", HttpStatus.BAD_REQUEST,
-                                null));
-            }
             University savedUniversity = universityRepository.save(university);
             UniversityReadDTO universityReadDTO = convertToUniversityReadDTO(savedUniversity);
             return ResponseEntity.status(HttpStatus.CREATED)
