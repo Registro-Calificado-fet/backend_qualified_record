@@ -21,12 +21,12 @@ public class UserController {
     private final IUserService userService;
 
     @Autowired
-    public UserController(IUserService userService){
+    public UserController(IUserService userService) {
         this.userService = userService;
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<List<UserReadDTO>>> getUsers(){
+    public ResponseEntity<ApiResponse<List<UserReadDTO>>> getUsers() {
         return userService.getUsers();
     }
 
@@ -44,7 +44,8 @@ public class UserController {
 
     // Endpoint para actualizar un usuario
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<UserReadDTO>> updateUser(@PathVariable Integer id, @RequestBody UserUpdateDTO userUpdateDTO) {
+    public ResponseEntity<ApiResponse<UserReadDTO>> updateUser(@PathVariable Integer id,
+            @RequestBody UserUpdateDTO userUpdateDTO) {
         return userService.updateUser(id, userUpdateDTO);
     }
 
