@@ -54,10 +54,10 @@ public class UniversityService implements IUniversityService {
             University savedUniversity = universityRepository.save(university);
             UniversityReadDTO universityReadDTO = convertToUniversityReadDTO(savedUniversity);
             return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(new ApiResponse<>("Usuario creado con éxito", HttpStatus.CREATED, universityReadDTO));
+                    .body(new ApiResponse<>("Universidad creada con éxito", HttpStatus.CREATED, universityReadDTO));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse<>("Error al crear usuario", HttpStatus.INTERNAL_SERVER_ERROR, null));
+                    .body(new ApiResponse<>("Error al crear la universidad", HttpStatus.INTERNAL_SERVER_ERROR, null));
         }
     }
 
@@ -87,10 +87,12 @@ public class UniversityService implements IUniversityService {
             List<UniversityReadDTO> universityDTOs = universityRepository.findAll().stream()
                     .map(this::convertToUniversityReadDTO)
                     .collect(Collectors.toList());
-            return ResponseEntity.ok(new ApiResponse<>("Usuarios obtenidos con éxito", HttpStatus.OK, universityDTOs));
+            return ResponseEntity
+                    .ok(new ApiResponse<>("Universidades obtenidas con éxito", HttpStatus.OK, universityDTOs));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse<>("Error al obtener usuarios", HttpStatus.INTERNAL_SERVER_ERROR, null));
+                    .body(new ApiResponse<>("Error al obtener las universidades", HttpStatus.INTERNAL_SERVER_ERROR,
+                            null));
         }
     }
 
@@ -106,11 +108,13 @@ public class UniversityService implements IUniversityService {
 
             UniversityReadDTO universityDTO = universityRepository.findById(id)
                     .map(this::convertToUniversityReadDTO)
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
-            return ResponseEntity.ok(new ApiResponse<>("Usuario encontrado con éxito", HttpStatus.OK, universityDTO));
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Universidad no encontrada"));
+            return ResponseEntity
+                    .ok(new ApiResponse<>("Universidad encontrada con éxito", HttpStatus.OK, universityDTO));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse<>("Error al obtener usuario por ID", HttpStatus.INTERNAL_SERVER_ERROR, null));
+                    .body(new ApiResponse<>("Error al obtener la universidad por ID", HttpStatus.INTERNAL_SERVER_ERROR,
+                            null));
         }
     }
 
@@ -125,17 +129,18 @@ public class UniversityService implements IUniversityService {
             }
 
             University university = universityRepository.findById(id)
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Universidad no encontrada"));
 
             objectMapper.readerForUpdating(university).readValue(objectMapper.writeValueAsString(universityUpdateDTO));
 
             University updatedUniversity = universityRepository.save(university);
             UniversityReadDTO universityReadDTO = convertToUniversityReadDTO(updatedUniversity);
             return ResponseEntity
-                    .ok(new ApiResponse<>("Usuario actualizado con éxito", HttpStatus.OK, universityReadDTO));
+                    .ok(new ApiResponse<>("Universidad actualizada con éxito", HttpStatus.OK, universityReadDTO));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse<>("Error al actualizar usuario", HttpStatus.INTERNAL_SERVER_ERROR, null));
+                    .body(new ApiResponse<>("Error al actualizar la universidad", HttpStatus.INTERNAL_SERVER_ERROR,
+                            null));
         }
     }
 
