@@ -2,12 +2,21 @@ package com.example.mycrud.model;
 
 import java.util.Date;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "university")
 public class University {
@@ -16,91 +25,22 @@ public class University {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "name", nullable = false)
     private String uniName;
 
+    @Column(name = "identification", nullable = false)
     private Integer uniIdentification;
 
+    @Column(name = "code", nullable = false)
     private String uniCode;
 
+    @Column(name = "address", nullable = false)
     private String uniAddress;
 
+    @Column(name = "creation_date", nullable = false)
     private Date uniCreationDate;
 
+    @Column(name = "creation_user", nullable = false)
     private String uniCreationUser;
-
-    public University() {
-    }
-
-    public University(String uniName, Integer uniIdentification) {
-        this.uniName = uniName;
-        this.uniIdentification = uniIdentification;
-    }
-
-    public University(Integer id, String uniName, Integer uniIdentification, String uniCode, String uniAddress,
-            Date uniCreationDate, String uniCreationUser) {
-        this.id = id;
-        this.uniName = uniName;
-        this.uniIdentification = uniIdentification;
-        this.uniCode = uniCode;
-        this.uniAddress = uniAddress;
-        this.uniCreationDate = uniCreationDate;
-        this.uniCreationUser = uniCreationUser;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getUniName() {
-        return uniName;
-    }
-
-    public void setUniName(String uniName) {
-        this.uniName = uniName;
-    }
-
-    public Integer getUniIdentification() {
-        return uniIdentification;
-    }
-
-    public void setUniIdentification(Integer uniIdentification) {
-        this.uniIdentification = uniIdentification;
-    }
-
-    public String getUniCode() {
-        return uniCode;
-    }
-
-    public void setUniCode(String uniCode) {
-        this.uniCode = uniCode;
-    }
-
-    public String getUniAddress() {
-        return uniAddress;
-    }
-
-    public void setUniAddress(String uniAddress) {
-        this.uniAddress = uniAddress;
-    }
-
-    public Date getUniCreationDate() {
-        return uniCreationDate;
-    }
-
-    public void setUniCreationDate(Date uniCreationDate) {
-        this.uniCreationDate = uniCreationDate;
-    }
-
-    public String getUniCreationUser() {
-        return uniCreationUser;
-    }
-
-    public void setUniCreationUser(String uniCreationUser) {
-        this.uniCreationUser = uniCreationUser;
-    }
 
 }
