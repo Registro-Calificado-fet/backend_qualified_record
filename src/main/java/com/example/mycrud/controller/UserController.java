@@ -1,6 +1,7 @@
 package com.example.mycrud.controller;
 
 import com.example.mycrud.model.dto.UserCreateDTO;
+import com.example.mycrud.model.dto.UserLoginDTO;
 import com.example.mycrud.model.dto.UserReadDTO;
 import com.example.mycrud.model.dto.UserUpdateDTO;
 import com.example.mycrud.service.IUserService;
@@ -42,6 +43,13 @@ public class UserController {
         return userService.createUser(userCreateDTO);
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<ApiResponse<String>> login(@Valid @RequestBody UserLoginDTO userLoginDTO) {
+        String email = userLoginDTO.getEmail();
+        String password = userLoginDTO.getPassword();
+        return userService.login(email, password);
+    }
+
     // Endpoint para actualizar un usuario
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<UserReadDTO>> updateUser(@PathVariable Integer id, @RequestBody UserUpdateDTO userUpdateDTO) {
@@ -54,8 +62,13 @@ public class UserController {
         return userService.deleteUser(id);
     }
 
+    // Endpoint para iniciar sesión
+
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiResponse<List<String>>> handleValidationExceptions(MethodArgumentNotValidException ex) {
         return ValidationExceptionHandler.handleValidationExceptions(ex);
     }
+
+
 }
