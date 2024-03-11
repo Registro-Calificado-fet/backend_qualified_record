@@ -34,3 +34,6 @@ build/
 
 ### Environment ###
 .env
+
+### File trash Mac
+.DS_Store
