@@ -1,11 +1,32 @@
 package com.example.mycrud.model.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 public class UserReadDTO {
     private Integer id;
     private String fullName;
     private Integer idNumber;
-    // Otros campos que quieras exponer en la API
-    // Getters y setters
+
+    private String email;
+
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public Integer getId() {
         return id;

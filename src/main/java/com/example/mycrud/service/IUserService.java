@@ -14,4 +14,6 @@ public interface IUserService {
     ResponseEntity<ApiResponse<UserReadDTO>> createUser(UserCreateDTO userCreateDTO);
     ResponseEntity<ApiResponse<UserReadDTO>> updateUser(Integer id, UserUpdateDTO userUpdateDTO);
     ResponseEntity<ApiResponse<Void>> deleteUser(Integer id);
+    ResponseEntity<ApiResponse<String>> login(String email, String password);
+
 }
