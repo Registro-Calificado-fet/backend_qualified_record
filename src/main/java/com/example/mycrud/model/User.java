@@ -1,8 +1,20 @@
 package com.example.mycrud.model;
 
-import jakarta.persistence.*;
-import org.hibernate.validator.constraints.UniqueElements;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "users")
 public class User {
@@ -10,67 +22,19 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(name = "full_name", nullable = false)
     private String fullName;
 
+    @Column(name = "tip_doc", nullable = false)
+    private String typ_doc;
+
+    @Column(name = "num_doc", nullable = false)
     private Integer idNumber;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
 
+    @Column(nullable = false)
     private String password;
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public User() {
-
-    }
-
-    public User(String fullName, Integer idNumber) {
-        this.fullName = fullName;
-        this.idNumber = idNumber;
-    }
-
-    public User(String fullName, Integer idNumber, Integer id) {
-        this.fullName = fullName;
-        this.idNumber = idNumber;
-        this.id = id;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public Integer getIdNumber() {
-        return idNumber;
-    }
-
-    public void setIdNumber(Integer idNumber) {
-        this.idNumber = idNumber;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 }
