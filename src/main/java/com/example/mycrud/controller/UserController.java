@@ -1,19 +1,29 @@
 package com.example.mycrud.controller;
 
-import com.example.mycrud.model.dto.UserCreateDTO;
-import com.example.mycrud.model.dto.UserReadDTO;
-import com.example.mycrud.model.dto.UserUpdateDTO;
-import com.example.mycrud.service.IUserService;
-import com.example.mycrud.utils.ApiResponse;
-import com.example.mycrud.utils.ValidationExceptionHandler;
-import jakarta.validation.Valid;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.example.mycrud.model.dtoUser.UserCreateDTO;
+import com.example.mycrud.model.dtoUser.UserLoginDTO;
+import com.example.mycrud.model.dtoUser.UserReadDTO;
+import com.example.mycrud.model.dtoUser.UserUpdateDTO;
+import com.example.mycrud.service.IUserService;
+import com.example.mycrud.utils.ApiResponse;
+import com.example.mycrud.utils.ValidationExceptionHandler;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(path = "api/v1/user")
@@ -42,6 +52,13 @@ public class UserController {
         return userService.createUser(userCreateDTO);
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<ApiResponse<String>> login(@Valid @RequestBody UserLoginDTO userLoginDTO) {
+        String email = userLoginDTO.getEmail();
+        String password = userLoginDTO.getPassword();
+        return userService.login(email, password);
+    }
+
     // Endpoint para actualizar un usuario
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<UserReadDTO>> updateUser(@PathVariable Integer id,
@@ -55,8 +72,11 @@ public class UserController {
         return userService.deleteUser(id);
     }
 
+    // Endpoint para iniciar sesión
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiResponse<List<String>>> handleValidationExceptions(MethodArgumentNotValidException ex) {
         return ValidationExceptionHandler.handleValidationExceptions(ex);
     }
+
 }
