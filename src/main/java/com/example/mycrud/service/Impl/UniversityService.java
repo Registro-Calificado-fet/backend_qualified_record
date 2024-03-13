@@ -38,16 +38,21 @@ public class UniversityService implements IUniversityService {
     @Override
     public UniversityReadDTO createUniversity(UniversityCreateDTO universityCreateDTO) {
 
-        University university = objectMapper.convertValue(universityCreateDTO, University.class);
+        Optional<University> optionalUniversity = Optional
+                .ofNullable(objectMapper.convertValue(universityCreateDTO, University.class));
 
-        if (university == null) {
+        if (optionalUniversity.isPresent()) {
+
+            University university = optionalUniversity.get();
+            University savedUniversity = universityRepository.save(university);
+            UniversityReadDTO universityReadDTO = convertToUniversityReadDTO(savedUniversity);
+
+            return universityReadDTO;
+
+        } else {
             throw new UniversityNotCreateExeption();
         }
 
-        University savedUniversity = universityRepository.save(university);
-        UniversityReadDTO universityReadDTO = convertToUniversityReadDTO(savedUniversity);
-
-        return universityReadDTO;
     }
 
     @Override
@@ -90,25 +95,19 @@ public class UniversityService implements IUniversityService {
         Optional<University> optionalUniversity = universityRepository.findById(id);
 
         if (optionalUniversity.isPresent()) {
+
             University university = optionalUniversity.get();
 
-            try {
-                objectMapper.readerForUpdating(university)
-                        .readValue(objectMapper.writeValueAsString(universityUpdateDTO));
-            } catch (Exception e) {
-                throw new UniversityNotUpdateExeption(id);
-            }
-
-            if (university == null) {
-                throw new UniversityNotCreateExeption();
-            }
+            university.setUniCode(universityUpdateDTO.getUniCode());
+            university.setUniAddress(universityUpdateDTO.getUniAddress());
+            university.setUniName(universityUpdateDTO.getUniName());
 
             University updatedUniversity = universityRepository.save(university);
             UniversityReadDTO universityReadDTO = convertToUniversityReadDTO(updatedUniversity);
 
             return universityReadDTO;
         } else {
-            throw new UniversityNotCreateExeption();
+            throw new UniversityNotUpdateExeption(id);
         }
     }
 }
