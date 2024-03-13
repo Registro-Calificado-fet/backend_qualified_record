@@ -37,3 +37,6 @@ build/
 
 ### File trash Mac
 .DS_Store
+
+#java
+.class

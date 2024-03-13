@@ -2,6 +2,7 @@ package com.example.mycrud.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -35,29 +36,36 @@ public class UniversityController {
 
     @GetMapping
     public ResponseEntity<ApiResponse<List<UniversityReadDTO>>> getUniversity() {
-        return universityService.getUniversity();
+        List<UniversityReadDTO> universityReadDTO = universityService.getUniversity();
+        return ResponseEntity
+                .ok(new ApiResponse<>("Universidades obtenidas con éxito", HttpStatus.OK, universityReadDTO));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<UniversityReadDTO>> getUniversityById(@PathVariable Integer id) {
-        return universityService.getUniversityById(id);
+        UniversityReadDTO universityReadDTO = universityService.getUniversityById(id);
+        return ResponseEntity.ok(new ApiResponse<>("Universidad obtenida con éxito", HttpStatus.OK, universityReadDTO));
     }
 
     @PostMapping
     public ResponseEntity<ApiResponse<UniversityReadDTO>> createUniversity(
             @RequestBody @Valid UniversityCreateDTO universityCreateDTO) {
-        return universityService.createUniversity(universityCreateDTO);
+        UniversityReadDTO universityReadDTO = universityService.createUniversity(universityCreateDTO);
+        return ResponseEntity.ok(new ApiResponse<>("Universidad creada con éxito", HttpStatus.OK, universityReadDTO));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<UniversityReadDTO>> updateUniversity(@PathVariable Integer id,
             @RequestBody UniversityUpdateDTO universityUpdateDTO) {
-        return universityService.updateUniversity(id, universityUpdateDTO);
+        UniversityReadDTO universityReadDTO = universityService.updateUniversity(id, universityUpdateDTO);
+        return ResponseEntity
+                .ok(new ApiResponse<>("Universidad actualizada con éxito", HttpStatus.OK, universityReadDTO));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteUniversity(@PathVariable Integer id) {
-        return universityService.deleteUniversity(id);
+        universityService.deleteUniversity(id);
+        return ResponseEntity.ok(new ApiResponse<>("Universidad eliminada con éxito", HttpStatus.OK, null));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
